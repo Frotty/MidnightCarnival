@@ -1,0 +1,21 @@
+package HeroTumor
+import Hero
+import SpellCyst
+
+constant real RADIUS = 64.
+constant int ID = 'H000'
+
+public class HeroTumor extends Hero
+	
+	construct(vec3 pos, player owner)
+		super(pos, RADIUS, CreateUnit(owner, ID, pos.x, pos.y, 0.))
+		
+	override static function onCast() returns boolean
+		var data = GetSpellAbilityUnit().getUserData() castTo HeroTumor
+		var id = GetSpellAbilityId()
+		var tx = GetSpellTargetX()
+		var ty = GetSpellTargetY()
+		switch id
+			case 'A000'
+				new Cyst(vec3(tx, ty, 0.), data.owner)
+		return false

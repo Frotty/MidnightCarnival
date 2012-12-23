@@ -1,0 +1,12 @@
+package SpellCyst
+import Entity
+
+constant real RADIUS = 16.
+constant int ID = 'cyst'
+
+public class Cyst extends UnitEntity
+	
+	construct(vec3 pos, player owner)
+		super(pos, RADIUS, CreateUnit(owner, ID, pos.x, pos.y, GetRandomReal(0, 360)))
+		actor.setAnimation("birth")
+	

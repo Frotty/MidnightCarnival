@@ -1,0 +1,33 @@
+package Car
+import Entity
+import Control
+
+public class Car extends Entity
+	unit car
+	real carAngle
+	real speed
+	real steerAngle = 0.
+	real wheelBase // the distance between the two axles
+
+	construct( vec3 pos, player owner, real length )
+		super(pos, owner)
+		wheelBase = length
+		car = CreateUnit(owner, 'hmtt', pos.x, pos.y, 0.)
+		//car.addAbility(LOCUST_ID)
+		
+	override function update()
+		var carHeading = carAngle * DEGTORAD
+		vec2 frontWheel = pos.toVec2() + (vec2( Cos(carHeading) , Sin(carHeading) ) * (wheelBase/2.))
+		vec2 backWheel = pos.toVec2() - (vec2( Cos(carHeading) , Sin(carHeading) ) * (wheelBase/2.))
+		backWheel += vec2(Cos(carHeading) , Sin(carHeading)) * speed
+		frontWheel += vec2(Cos(carHeading+steerAngle*DEGTORAD) , Sin(carHeading+steerAngle*DEGTORAD)) * speed
+		pos.x = (frontWheel.x + backWheel.x) / 2.
+		pos.y = (frontWheel.y + backWheel.y) / 2.
+		carAngle = Atan2( frontWheel.y - backWheel.y , frontWheel.x - backWheel.x ) * RADTODEG
+		car.setPos(pos.x,pos.y)
+		car.setFacing(carAngle)
+		
+public function start()
+	cars[0] = new Car(vec3(0,0,0), Player(0), 162. )
+	cars[1] = new Car(vec3(0,128.,0), Player(1), 162. )
+	

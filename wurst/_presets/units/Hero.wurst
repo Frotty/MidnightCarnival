@@ -6,6 +6,5 @@ public abstract class Hero extends PhysicsUnitEntity
 	
 	construct(vec3 pos, real radius, unit hero )
 		super(pos, radius, hero)
-		actor.registerCastEvent(Condition(function Hero.onCast))
+		print(actor.getName())
 		
-	static abstract function onCast() returns boolean

@@ -1,0 +1,15 @@
+package GameInit
+import HeroTumor
+import EntityManagement
+import SoundHelper
+
+
+function startGame()
+	SetTimeOfDay(12.)
+	new HeroTumor(vec3(0,0,0), Player(0))
+	startEntityLoop()
+
+
+init
+	getTimer().start(0.1, function startGame)
+	

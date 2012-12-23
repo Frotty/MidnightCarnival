@@ -1,12 +1,19 @@
 package SpellCyst
 import Entity
+import SoundHelper
 
 constant real RADIUS = 16.
 constant int ID = 'cyst'
+
+Sound cystSpawn1 = new Sound("Doodads\\Dungeon\\Terrain\\EggSack\\EggSackDeath1.wav", 2099, false, true )
+Sound cystSpawn2 = new Sound("Abilities\\Spells\\Undead\\DeathandDecay\\DeathAndDecayTarget3.wav", 1235, false, true )
 
 public class Cyst extends UnitEntity
 	
 	construct(vec3 pos, player owner)
 		super(pos, RADIUS, CreateUnit(owner, ID, pos.x, pos.y, GetRandomReal(0, 360)))
-		actor.setAnimation("birth")
+		actor.setTimeScale(0.5).setAnimation("birth").queueAnimation("stand")
+		cystSpawn1.playOnPoint(pos.x, pos.y, pos.z)
+		cystSpawn2.playOnPoint(pos.x, pos.y, pos.z)
+		debugPrint("created", 2)
 	

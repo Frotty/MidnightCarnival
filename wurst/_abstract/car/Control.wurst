@@ -105,5 +105,3 @@ function initA()
 	
 	start()
 	
-init
-	getTimer().start(0.1, function initA)

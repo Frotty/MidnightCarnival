@@ -13,8 +13,8 @@ public class HomingProjectile extends FxEntity
 	real speed = 10.
 
 	
-	construct(vec3 pos, real radius, player owner, real angle, string fxpath)
-		super(pos, radius, owner, angle, fxpath)
+	construct(vec3 pos, real radius, player owner, angle xyAngle, string fxpath)
+		super(pos, radius, owner, xyAngle, fxpath)
 
 		
 	function setTarget(Entity e)

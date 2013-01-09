@@ -1,0 +1,20 @@
+package PlayerData
+import LinkedList
+import Colors
+
+LinkedList<PlayerData> players = new LinkedList<PlayerData>
+
+public class PlayerData
+	player p
+	string name
+	string styledName
+	int id
+	int gameId
+
+	construct(player p, int gId)
+		this.p = p
+		name = p.getName()
+		id = p.getId()
+		gameId = gId
+		styledName = colors[id].toColorString() + name
+		players.add(this)

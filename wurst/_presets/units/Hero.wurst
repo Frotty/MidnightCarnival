@@ -8,3 +8,7 @@ public abstract class Hero extends PhysicsUnitEntity
 		super(pos, radius, hero)
 		print(actor.getName())
 		
+	override function update()
+		super.update()
+		pos.x = actor.getX()
+		pos.y = actor.getY()

@@ -2,11 +2,19 @@ package HeroTumor
 import Hero
 import SpellCyst
 import EventHandling
+import LinkedList
 
 constant real RADIUS = 64.
 constant int ID = 'Htmr'
 
+
+constant int SPELL_CYST_ID = 'A003'
+constant int BLIGHT_ID = 1281651311
+
 public class HeroTumor extends Hero
+	LinkedList<Cyst> cysts = new LinkedList<Cyst>()
+	effect blightEffect
+	boolean onBlight = false
 	
 	construct(vec3 pos, player owner)
 		super(pos, RADIUS, CreateUnit(owner, ID, pos.x, pos.y, 0.))
@@ -17,12 +25,28 @@ public class HeroTumor extends Hero
 		
 	static function onCast() returns boolean
 		debugPrint("casted", 2)
-		var data = GetSpellAbilityUnit().getUserData() castTo HeroTumor
+		var caster = GetSpellAbilityUnit()
+		var data = caster.getUserData() castTo HeroTumor
 		var id = GetSpellAbilityId()
 		var tx = GetSpellTargetX()
 		var ty = GetSpellTargetY()
+		AddSpecialEffect("war3mapImported\\InvokerRUnes.mdx", data.pos.x, data.pos.y).destr()
 		switch id
-			case 'A003'
+			case SPELL_CYST_ID
 				debugPrint("casted cyst", 2)
-				new Cyst(vec3(tx, ty, 0.), data.owner)
+				let spellLvl = GetUnitAbilityLevel(caster, SPELL_CYST_ID)
+				
+				if spellLvl + 2 > data.cysts.size
+					data.cysts.add(new Cyst(vec3(tx, ty, 0.), data.owner))
+					
 		return false
+		
+	override function update()
+		super.update()
+		if IsPointBlighted(pos.x, pos.y)
+			if not onBlight
+				onBlight = true
+				blightEffect = AddSpecialEffectTarget("Heros\\Sfx\\BlightParticles.mdx", actor, "chest")
+		else if onBlight
+			onBlight = false
+			blightEffect.destr()

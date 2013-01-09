@@ -1,14 +1,15 @@
 package Projectile
 import Entity
+import Angle
 
 public class Projectile extends FxEntity
 	// Angles
-	real xyAngle
-	real zAngle = 0.
+	angle xyAngle
+	angle zAngle
 	
 	// Moving Speed
 	real speed = 0.
 	
-	construct( vec3 pos, real radius, player owner, real angle, string fxpath )
-		super(pos, radius, owner, angle, fxpath)
+	construct( vec3 pos, real radius, player owner, angle xyAngle, string fxpath )
+		super(pos, radius, owner, xyAngle, fxpath)
 		

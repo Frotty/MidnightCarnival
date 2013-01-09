@@ -4,6 +4,7 @@ import Terrain
 import PhysicsConstants
 import Debug
 import Fx
+import Angle
 
 /** Base Entity Class  */
 public abstract class Entity
@@ -77,14 +78,14 @@ public abstract class Entity
 		
 	function setTarget( vec3 tpos, real speed )
 		var t = distanceBetweenCoords(pos.x, pos.y, tpos.x, tpos.y) / speed
-		let angle = angleBetweenCoordsR(pos.x, pos.y, tpos.x, tpos.y)
+		let tangle = angleBetweenCoordsR(pos.x, pos.y, tpos.x, tpos.y)
 		let e = getTerrainZ(tpos.x,tpos.y)
 		
 		if t < 1.
 			t = 1./speed
 		
 		let startZVelocity = ((-gravity.z * t) / 2 - pos.z/t + e/t)
-		this.setVel( vec3( Cos(angle) * speed, Sin(angle) * speed, startZVelocity) )
+		this.setVel( vec3( Cos(tangle) * speed, Sin(tangle) * speed, startZVelocity) )
 		
 	function terminate()
 		done = true
@@ -126,17 +127,17 @@ abstract public class UnitEntity extends Entity
 abstract public class FxEntity extends Entity
 	protected Fx fx
 	
-	construct( vec3 pos, real radius, player owner, real angle, string sfxpath )
+	construct( vec3 pos, real radius, player owner, angle xyAngle, string sfxpath )
 		super(pos, radius, owner)
-		fx = new Fx(pos, angle, sfxpath)
+		fx = new Fx(pos, xyAngle, sfxpath)
 		
-	construct( vec3 pos, real radius, player owner, real angle )
+	construct( vec3 pos, real radius, player owner, angle xyAngle )
 		super(pos, radius, owner)
-		fx = new Fx(pos, angle)
+		fx = new Fx(pos, xyAngle)
 	
-	construct( vec3 pos, player owner, real angle )
+	construct( vec3 pos, player owner, angle xyAngle )
 		super(pos, 0., owner)
-		fx = new Fx(pos, angle)
+		fx = new Fx(pos, xyAngle)
 		
 	override function update()
 		pos += (vel*speedFactor)

@@ -1,0 +1,22 @@
+package WalkNode
+
+public class WalkNode
+	static trigger inRangeTrig
+	unit dummy
+	vec2 target
+	
+	construct(vec2 pos)
+		dummy = createUnit(DUMMY_PLAYER, DUMMY_UNIT_ID, pos, angle(0))
+		dummy.addAbility(LOCUST_ID)
+		WalkNode.inRangeTrig.registerUnitInRangeSource(dummy, 128.)
+		WalkNode.inRangeTrig.addAction(function WalkNode.moveOrder)
+		
+		dummy.setUserData(this castTo int)
+		
+	static function moveOrder()
+		let tr = GetTriggeringTrigger()
+		let source = tr.getSource()
+		let data = source.getUserData() castTo WalkNode
+		let u = GetTriggerUnit()
+		
+		u.issuePointOrder("attack", data.target)

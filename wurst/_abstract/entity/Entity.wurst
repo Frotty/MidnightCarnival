@@ -5,6 +5,9 @@ import PhysicsConstants
 import Debug
 import Fx
 import Angle
+import EntityRegion
+import Buff
+import public LinkedList
 
 /** Base Entity Class  */
 public abstract class Entity
@@ -31,11 +34,15 @@ public abstract class Entity
 	boolean done 		= false
 	/** even if the Entites pos.z might be > 0, it still can be below terrainZ */
 	boolean flying 		= false
+	
+	EntityRegion currentRegion
 
 	construct( vec3 pos, player owner )
 		this.pos = pos
 		this.vel = vec3(0,0,0)
 		this.owner = owner
+		currentRegion = getEntityRegion(pos)
+		
 		entityCount++
 
 	construct( vec3 pos, real radius, player owner )
@@ -43,12 +50,16 @@ public abstract class Entity
 		this.vel = vec3(0,0,0)
 		this.owner = owner
 		this.radius = radius
+		currentRegion = getEntityRegion(pos)
+		
 		entityCount++
 		
 	construct( vec3 pos, vec3 vel, player owner )
 		this.pos = pos
 		this.vel = vel
 		this.owner = owner
+		currentRegion = getEntityRegion(pos)
+		
 		entityCount++
 		
 	construct( vec3 pos, vec3 vel, real radius, player owner )
@@ -56,6 +67,8 @@ public abstract class Entity
 		this.vel = vel
 		this.owner = owner
 		this.radius = radius
+		currentRegion = getEntityRegion(pos)
+		
 		entityCount++
 		
 	function getPos() returns vec3
@@ -96,6 +109,8 @@ public abstract class Entity
 abstract public class UnitEntity extends Entity
 	protected unit actor
 	
+	LinkedList<Buff> currentBuffs = new LinkedList<Buff>()
+	
 	construct( vec3 pos, unit actor )
 		super(pos, actor.getOwner())
 		this.actor = actor
@@ -119,6 +134,7 @@ abstract public class UnitEntity extends Entity
 	override function setPos(vec3 tpos)
 		pos = tpos
 		actor.setPos(tpos.x,tpos.y)
+		actor.setFlyHeight(tpos.z - getTerrainZ(tpos.x, tpos.y), 0)
 		
 	function setXY(vec3 tpos)
 		pos = tpos

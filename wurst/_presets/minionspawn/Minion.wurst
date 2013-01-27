@@ -1,0 +1,19 @@
+package Minion
+import Entity
+
+public abstract class Minion extends UnitEntity
+	vec2 target
+	
+	construct(vec2 pos, int id, player owner)
+		super(pos.toVec3(), createUnit(owner, id, pos, angle(0)))
+		
+	construct(vec2 pos, int id, player owner, vec2 target)
+		super(pos.toVec3(), createUnit(owner, id, pos, pos.angleTo(target)))
+		orderAttack(target)
+		
+	function orderAttack(vec2 target)
+		this.target = target
+		actor.issuePointOrder("attack", target)
+		
+	function orderAttack()
+		actor.issuePointOrder("attack", target)

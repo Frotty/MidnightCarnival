@@ -18,10 +18,7 @@ public class Cyst extends UnitEntity
 		cystSpawn1.playOnPoint(pos.x, pos.y, pos.z)
 		cystSpawn2.playOnPoint(pos.x, pos.y, pos.z)
 		debugPrint("created1", 5)
-		var f = new Fx(vec2(pos.x, pos.y), angle(0), "war3mapImported\\soundwaveRed.mdx")
-		f.setScale(10.)
-		destroy f
-		debugPrint("created2", 5)
+		debugPrint("created id:" + (this castTo int).toString(), 5)
 	
 	override function update()
 		if blightRadius < 320

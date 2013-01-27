@@ -1,8 +1,8 @@
 package Hero
-import PhysicsEntity
+import Entity
 import EventHandling
 
-public abstract class Hero extends PhysicsUnitEntity
+public abstract class Hero extends UnitEntity
 	
 	construct(vec3 pos, real radius, unit hero )
 		super(pos, radius, hero)

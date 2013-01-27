@@ -3,14 +3,15 @@ import Hero
 import SpellCyst
 import EventHandling
 import LinkedList
+import EntityRegion
 
 constant real RADIUS = 64.
 constant int ID = 'Htmr'
 
 
 constant int SPELL_CYST_ID = 'A003'
-constant int BLIGHT_ID = 1281651311
 
+// Burkitt
 public class HeroTumor extends Hero
 	LinkedList<Cyst> cysts = new LinkedList<Cyst>()
 	effect blightEffect
@@ -50,3 +51,5 @@ public class HeroTumor extends Hero
 		else if onBlight
 			onBlight = false
 			blightEffect.destr()
+			
+		print((getEntityRegion(pos)castTo int).toString())

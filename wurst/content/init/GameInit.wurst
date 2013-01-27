@@ -1,13 +1,23 @@
 package GameInit
-import HeroTumor
+import HeroNAdept
 import EntityManagement
 import SoundHelper
+import EntityRegion
 
+function test()
+	print("y")
+	return
 
 function startGame()
+	print("init 1")
+	initEntityRegions()
+	print("init 2")
 	SetTimeOfDay(12.)
-	new HeroTumor(vec3(0,0,0), Player(0))
+	new HeroNAdept(vec3(0,0,0), Player(0))
 	startEntityLoop()
+	test()
+	print("nooooooo")
+	GetExpiredTimer().release()
 
 
 init

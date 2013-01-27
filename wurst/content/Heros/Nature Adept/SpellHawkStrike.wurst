@@ -1,0 +1,45 @@
+package SpellHawkStrike
+import Hero
+import Entity
+import BezierMissile
+import Colors
+
+
+constant int HAWK_DUMMY_ID = 'naed'
+
+public class Hawk extends UnitEntity 	
+	BezierMissile dummyMissile
+	vec2 target
+	Hero caster
+	int colZ = 0
+	angle ang
+	boolean circling
+	
+	construct( Hero caster, vec3 startPos, vec3 targetPos, angle facing, real dist )
+		super( startPos, createUnit(caster.owner, HAWK_DUMMY_ID, startPos.toVec2(), facing ))
+		actor.addAbility(LOCUST_ID).setVertexColor(255,255,255,colZ)
+		
+		dummyMissile = new BezierMissile(startPos, 0, caster.owner, facing, "")
+		dummyMissile.setControlPoints( startPos.offset2d(facing, -dist/3 ).addReals(0,0,200.)
+										, startPos.offset2d(facing, (dist/3)+(dist/5) ).addReals(0,0,400.)
+										, targetPos.addReals(0,0,350.))
+		dummyMissile.setDuration(3.)
+		target = targetPos.toVec2()
+		this.caster = caster
+		ang = facing
+	override function update()
+		if colZ < 255
+			colZ+= 4
+			actor.setVertexColor(255,255,255,colZ)
+			
+		if circling
+			ang += angle(2 *DEGTORAD)
+			actor.setPos(target.polarOffset(ang, -256.))
+			actor.setFacing(ang - angle(90. * DEGTORAD))
+			return
+		
+		if pos.toVec2().distToVecSquared(target) < 256*256
+			circling = true
+			dummyMissile.terminate()
+		else
+			setPos(dummyMissile.pos)

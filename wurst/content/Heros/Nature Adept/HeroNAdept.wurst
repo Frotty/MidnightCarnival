@@ -1,0 +1,61 @@
+package HeroNAdept
+import Hero
+import EventHandling
+import LinkedList
+import EntityRegion
+import SpellEnergyBarrier
+import DamageMod
+import SpellHawkStrike
+import Terrain
+
+constant real RADIUS = 64.
+constant int ID = 'Hntr'
+
+constant int SPELL_BARRIER_ID = 'A000'
+constant int SPELL_HAWK_ID = 'A001'
+// Angelica
+public class HeroNAdept extends Hero
+
+	
+	construct(vec3 pos, player owner)
+		super(pos, RADIUS, CreateUnit(owner, ID, pos.x, pos.y, 0.))
+		debugPrint("created", 2)
+		actor.registerCastEvent(Condition(function HeroNAdept.onCast))
+		print("registered")
+		trigger t = CreateTrigger()
+		t.registerUnitEvent(actor, EVENT_UNIT_DAMAGED)
+		t.addAction(function HeroNAdept.noDmg)
+		
+	static function noDmg()
+		let data = GetTriggerUnit().getUserData() castTo HeroNAdept
+		if data.actor.getHP() <= GetEventDamage()
+			modifyDamage(data.actor.getHP() - 1.5)	
+		
+	static function onCast() returns boolean
+		debugPrint("casted", 2)
+		var caster = GetSpellAbilityUnit()
+		var data = caster.getUserData() castTo HeroNAdept
+		var id = GetSpellAbilityId()
+		var tx = GetSpellTargetX()
+		var ty = GetSpellTargetY()
+		let tvec = vec2(tx,ty)
+		let ang = data.pos.toVec2().angleTo(tvec)
+		let dist = data.pos.toVec2().distToVec(tvec)
+		int lvl = GetUnitAbilityLevel(caster, id)
+		AddSpecialEffect("war3mapImported\\InvokerRUnes.mdx", data.pos.x, data.pos.y).destr()
+		switch id
+			case SPELL_BARRIER_ID
+				debugPrint("Barrier", 2)
+				new BarrierBuff(data, lvl*5. + 10)
+			
+			case SPELL_HAWK_ID
+				debugPrint("hawk", 2)
+				
+				new Hawk(data, data.pos.offset2d(ang, -250.), tvec.withZ(getTerrainZ(tx,ty)), ang, dist)
+
+
+		return false
+		
+	override function update()
+		super.update()
+

@@ -1,0 +1,30 @@
+package Buff
+import public Entity
+
+public abstract class Buff
+	UnitEntity victim
+
+	real duration
+	int abilId
+	boolean running = true
+	boolean done = false
+
+	construct(UnitEntity victim, real dur, int abilId)
+		this.victim = victim
+		this.abilId = abilId
+		duration = dur
+
+	function update()
+		if running
+			duration -= ANIMATION_PERIOD
+		if duration <= 0.
+			done = true
+			
+	function terminate()
+		done = true
+			
+	abstract function apply()
+
+	abstract function attackModifier()
+	
+	abstract function defenseModifier()

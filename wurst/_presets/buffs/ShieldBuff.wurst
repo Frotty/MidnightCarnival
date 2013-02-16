@@ -1,0 +1,24 @@
+package ShieldBuff
+import PresetBuffs
+import DamageMod
+
+public class NormalShieldBuff extends NormalBuff
+	real blockAmount
+	
+	construct(UnitEntity victim, real dur, int abilId, real amount)
+		super(victim, dur, abilId)
+		blockAmount = amount
+
+	override function defenseModifier()
+		let dmg = getDamage()
+		if dmg >= blockAmount
+			modifyDamage(blockAmount)
+			destroy this
+		else
+			modifyDamage(blockAmount - dmg)
+			blockAmount = blockAmount - dmg
+			
+	override function attackModifier()
+
+		
+	

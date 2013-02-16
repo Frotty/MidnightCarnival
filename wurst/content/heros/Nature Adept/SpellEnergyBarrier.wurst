@@ -1,23 +1,17 @@
 package SpellEnergyBarrier
-import PresetBuffs
-import DamageMod
+import ShieldBuff
+import Entity
 import AbilityObjEditing
 
 
 constant int BUFFABIL_ID = 'BNAe'
 constant int TRANSFER_ID = 'A000'
 
-public class BarrierBuff extends NormalBuff
-	real damageStorage
-	
-	construct(UnitEntity victim, real dur)
-		super(victim, dur, BUFFABIL_ID)
-		
-		
-	override function attackModifier()
-		
-	override function defenseModifier()
-		modifyDamage(-50.)
+public class BarrierBuff extends NormalShieldBuff
+
+	construct(UnitEntity victim, real dur, real amount)
+		super(victim, dur, BUFFABIL_ID, amount)
+
 		
 @compiletime function createAbilities()
 //	let bdef = new BuffDefinition("BAts", "Basl" )

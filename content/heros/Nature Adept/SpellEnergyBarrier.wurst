@@ -23,5 +23,5 @@ public class BarrierBuff extends NormalBuff
 //	let bdef = new BuffDefinition("BAts", "Basl" )
 //	bdef.setTooltipNormal(0, "Energy Barrier")
 //	bdef.setTooltipNormalExtended(0, "Blocks damage")
-//	let def = new AbilityDefinition("BAte", "Aasl")
-//	def.setTooltipNormal(1, "shit")
+	let def = new AbilityDefinition("asdd", "Aasl")
+	def.setName(0, "shit")

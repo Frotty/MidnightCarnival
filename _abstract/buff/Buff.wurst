@@ -22,6 +22,16 @@ public abstract class Buff
 			
 	function terminate()
 		done = true
+		
+	ondestroy
+		boolean isLast = true
+		for bff in victim.currentBuffs
+			if bff.abilId == this.abilId
+				isLast = false
+				break
+		
+		if isLast
+			victim.actor.removeAbility(abilId)
 			
 	abstract function apply()
 

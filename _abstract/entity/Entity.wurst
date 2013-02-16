@@ -107,6 +107,7 @@ public abstract class Entity
 	abstract function update()
 	
 abstract public class UnitEntity extends Entity
+	static trigger dmgTrig = CreateTrigger()
 	protected unit actor
 	
 	LinkedList<Buff> currentBuffs = new LinkedList<Buff>()
@@ -140,6 +141,19 @@ abstract public class UnitEntity extends Entity
 		pos = tpos
 		actor.setXY(tpos.x,tpos.y)
 		
+	static function onDamage()
+		let victimData = GetTriggerUnit().getUserData() castTo UnitEntity
+		let attackerData = GetAttacker().getUserData() castTo UnitEntity
+		
+		for bff in victimData.currentBuffs
+			bff.defenseModifier()
+			
+		for bff in attackerData.currentBuffs
+			bff.attackModifier()
+		
+init
+	UnitEntity.dmgTrig.addAction(function UnitEntity.onDamage)		
+
 abstract public class FxEntity extends Entity
 	protected Fx fx
 	

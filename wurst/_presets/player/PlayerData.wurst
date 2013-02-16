@@ -16,5 +16,5 @@ public class PlayerData
 		name = p.getName()
 		id = p.getId()
 		gameId = gId
-		styledName = colors[id].toColorString() + name
+		styledName = playercolors[id].toColorString() + name
 		players.add(this)

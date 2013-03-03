@@ -11,8 +11,6 @@ import Terrain
 constant real RADIUS = 64.
 constant int ID = 'Hntr'
 
-constant int SPELL_BARRIER_ID = 'A000'
-constant int SPELL_HAWK_ID = 'A001'
 // Angelica
 public class HeroNAdept extends Hero
 
@@ -22,14 +20,7 @@ public class HeroNAdept extends Hero
 		debugPrint("created", 2)
 		actor.registerCastEvent(Condition(function HeroNAdept.onCast))
 		print("registered")
-		trigger t = CreateTrigger()
-		t.registerUnitEvent(actor, EVENT_UNIT_DAMAGED)
-		t.addAction(function HeroNAdept.noDmg)
-		
-	static function noDmg()
-		let data = GetTriggerUnit().getUserData() castTo HeroNAdept
-		if data.actor.getHP() <= GetEventDamage()
-			modifyDamage(data.actor.getHP() - 1.5)	
+
 		
 	static function onCast() returns boolean
 		debugPrint("casted", 2)
@@ -44,11 +35,11 @@ public class HeroNAdept extends Hero
 		int lvl = GetUnitAbilityLevel(caster, id)
 		AddSpecialEffect("war3mapImported\\InvokerRUnes.mdx", data.pos.x, data.pos.y).destr()
 		switch id
-			case SPELL_BARRIER_ID
+			case BARRIER_SPELL_ID
 				debugPrint("Barrier", 2)
-				new BarrierBuff(data, lvl*5. + 10)
+				new BarrierBuff(data, 30., 150)
 			
-			case SPELL_HAWK_ID
+			case '0000'
 				debugPrint("hawk", 2)
 				
 				new Hawk(data, data.pos.offset2d(ang, -250.), tvec.withZ(getTerrainZ(tx,ty)), ang, dist)

@@ -116,12 +116,14 @@ abstract public class UnitEntity extends Entity
 		super(pos, actor.getOwner())
 		this.actor = actor
 		actor.setUserData(this castTo int).addAbility(HEIGHT_ENABLER).removeAbility(HEIGHT_ENABLER)
+		dmgTrig.registerUnitEvent(actor, EVENT_UNIT_DAMAGED)
 		unitEntityCount++
 		
 	construct( vec3 pos, real radius, unit actor )
 		super(pos, radius, actor.getOwner())
 		this.actor = actor
 		actor.setUserData(this castTo int).addAbility(HEIGHT_ENABLER).removeAbility(HEIGHT_ENABLER)
+		dmgTrig.registerUnitEvent(actor, EVENT_UNIT_DAMAGED)
 		unitEntityCount++
 		
 	override function update()
@@ -144,12 +146,12 @@ abstract public class UnitEntity extends Entity
 	static function onDamage()
 		let victimData = GetTriggerUnit().getUserData() castTo UnitEntity
 		let attackerData = GetAttacker().getUserData() castTo UnitEntity
-		
+		debugPrint("onDamage " + victimData.currentBuffs.size.toString(), 2)
 		for bff in victimData.currentBuffs
 			bff.defenseModifier()
 			
-		for bff in attackerData.currentBuffs
-			bff.attackModifier()
+//		for bff in attackerData.currentBuffs
+//			bff.attackModifier()
 		
 init
 	UnitEntity.dmgTrig.addAction(function UnitEntity.onDamage)		

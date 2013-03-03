@@ -8,15 +8,18 @@ public class NormalShieldBuff extends NormalBuff
 	construct(UnitEntity victim, real dur, int abilId, real amount)
 		super(victim, dur, abilId)
 		blockAmount = amount
+		apply()
+		debugPrint("amount set", 2)
 
 	override function defenseModifier()
 		let dmg = getDamage()
 		if dmg >= blockAmount
-			modifyDamage(blockAmount)
+			modifyDamage(-blockAmount)
 			destroy this
 		else
-			modifyDamage(blockAmount - dmg)
+			modifyDamage(-dmg)
 			blockAmount = blockAmount - dmg
+			
 			
 	override function attackModifier()
 

@@ -43,3 +43,4 @@ public class Hawk extends UnitEntity
 			dummyMissile.terminate()
 		else
 			setPos(dummyMissile.pos)
+			

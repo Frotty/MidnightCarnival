@@ -1,0 +1,14 @@
+package ExportedObjects
+import ObjEditingNatives
+
+//origTable: 
+
+//modifiedTable: 
+
+@compiletime function create_w3h_BAnb()
+	let u = createObjectDefinition("w3h", "BAnb", "Basl")
+	u.setInt("wurs", 42)
+	u.setString("ftip", "|cff31A54AEnergy Barrier")
+	u.setString("fube", "Blocks some damage and increases regeneration.")
+
+

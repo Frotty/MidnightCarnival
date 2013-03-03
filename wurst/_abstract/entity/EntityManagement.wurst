@@ -1,5 +1,6 @@
 package EntityManagement
 import public Entity
+import Buff
 
 function updateEntities()
 	Entity e = Entity.first
@@ -10,6 +11,14 @@ function updateEntities()
 		else if e.active
 			e.update()
 		e = e.next
+		
+	Buff b = Buff.first
+	while b != null
+		if b.done
+			destroy b
+		else
+			b.update()
+		b = b.next
 
 public function startEntityLoop() returns boolean
 	getTimer().startPeriodic(0.03, function updateEntities)

@@ -7,7 +7,6 @@ public abstract class NormalBuff extends Buff
 
 	construct(UnitEntity victim, real dur, int abilId)
 		super(victim, dur, abilId)
-		apply()
 
 	override function update()
 		if running
@@ -32,7 +31,6 @@ public abstract class StackingBuff extends Buff
 
 	construct(UnitEntity victim, real dur, int abilId)
 		super(victim, dur, abilId)
-		apply()
 
 	override function update()
 		if running
@@ -43,3 +41,4 @@ public abstract class StackingBuff extends Buff
 	override function apply()			
 		victim.currentBuffs.add(this)
 		
+

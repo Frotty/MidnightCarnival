@@ -1,4 +1,5 @@
 package HeroNAdept
+import Entity
 import Hero
 import EventHandling
 import LinkedList
@@ -12,40 +13,54 @@ constant real RADIUS = 64.
 constant int ID = 'Hntr'
 
 // Angelica
-public class HeroNAdept extends Hero
-
+public class HeroNAdept extends UnitEntity 
+	use Hero
 	
 	construct(vec3 pos, player owner)
 		super(pos, RADIUS, CreateUnit(owner, ID, pos.x, pos.y, 0.))
+		registerEvents(actor)
 		debugPrint("created", 2)
-		actor.registerCastEvent(Condition(function HeroNAdept.onCast))
-		print("registered")
+		asdfdafsd
+
+	/**
+		What is this I don't even
+	*/
+	override static function onCast(int abilId, thistype caster, int lvl)
+		BarrierBuff.onCast(caster, lvl)
+	
+	override static function onPointCast(int abildId, thistype caster, int lvl, vec2 tpos)
+	
+	override static function onUnitCast(int abildId, thistype caster, int lvl, unit target)
+	
+	override static function onEndCast(int abilId, thistype caster, int lvl )
 
 		
-	static function onCast() returns boolean
-		debugPrint("casted", 2)
-		var caster = GetSpellAbilityUnit()
-		var data = caster.getUserData() castTo HeroNAdept
-		var id = GetSpellAbilityId()
-		var tx = GetSpellTargetX()
-		var ty = GetSpellTargetY()
-		let tvec = vec2(tx,ty)
-		let ang = data.pos.toVec2().angleTo(tvec)
-		let dist = data.pos.toVec2().distToVec(tvec)
-		int lvl = GetUnitAbilityLevel(caster, id)
-		AddSpecialEffect("war3mapImported\\InvokerRUnes.mdx", data.pos.x, data.pos.y).destr()
-		switch id
-			case BARRIER_SPELL_ID
-				debugPrint("Barrier", 2)
-				new BarrierBuff(data, 30., 150)
-			
-			case '0000'
-				debugPrint("hawk", 2)
-				
-				new Hawk(data, data.pos.offset2d(ang, -250.), tvec.withZ(getTerrainZ(tx,ty)), ang, dist)
 
-
-		return false
+		
+//	static function onCast() returns boolean
+//		debugPrint("casted", 2)
+//		var caster = GetSpellAbilityUnit()
+//		var data = caster.getUserData() castTo HeroNAdept
+//		var id = GetSpellAbilityId()
+//		var tx = GetSpellTargetX()
+//		var ty = GetSpellTargetY()
+//		let tvec = vec2(tx,ty)
+//		let ang = data.pos.toVec2().angleTo(tvec)
+//		let dist = data.pos.toVec2().distToVec(tvec)
+//		int lvl = GetUnitAbilityLevel(caster, id)
+//		AddSpecialEffect("war3mapImported\\InvokerRUnes.mdx", data.pos.x, data.pos.y).destr()
+//		switch id
+//			case BARRIER_SPELL_ID
+//				debugPrint("Barrier", 2)
+//				new BarrierBuff(data, 30., 150)
+//			
+//			case '0000'
+//				debugPrint("hawk", 2)
+//				
+//				new Hawk(data, data.pos.offset2d(ang, -250.), tvec.withZ(getTerrainZ(tx,ty)), ang, dist)
+//
+//
+//		return false
 		
 	override function update()
 		super.update()

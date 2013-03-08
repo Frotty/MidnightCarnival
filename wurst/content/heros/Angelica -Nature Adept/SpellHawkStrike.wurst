@@ -1,5 +1,4 @@
 package SpellHawkStrike
-import Hero
 import Entity
 import BezierMissile
 import Colors
@@ -10,12 +9,12 @@ constant int HAWK_DUMMY_ID = 'naed'
 public class Hawk extends UnitEntity 	
 	BezierMissile dummyMissile
 	vec2 target
-	Hero caster
+	UnitEntity caster
 	int colZ = 0
 	angle ang
 	boolean circling
 	
-	construct( Hero caster, vec3 startPos, vec3 targetPos, angle facing, real dist )
+	construct( UnitEntity caster, vec3 startPos, vec3 targetPos, angle facing, real dist )
 		super( startPos, createUnit(caster.owner, HAWK_DUMMY_ID, startPos.toVec2(), facing ))
 		actor.addAbility(LOCUST_ID).setVertexColor(255,255,255,colZ)
 		

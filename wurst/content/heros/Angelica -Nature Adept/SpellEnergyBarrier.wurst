@@ -1,14 +1,38 @@
 package SpellEnergyBarrier
 import ShieldBuff
 import Entity
+import HeroNAdept
 import AbilityObjEditing
 import ChannelSpellPreset
 import BuffObjEditing
 import TextTagEntity
+import TimedLoop
+import Texttag
 
 public constant int BARRIER_SPELL_ID = 'HAnb'
 constant int BUFFABIL_ID = 'AAnb'
 constant int TRANSFER_ID = 'A000'
+
+
+ChannelData cdata
+
+class ChannelData
+	use TimedLoop
+	texttag tt
+	real currentAmount = 0.
+	real incAmount = 0.
+	UnitEntity caster
+	
+	construct(real inc, UnitEntity caster)
+		incAmount = inc
+		this.caster = caster
+		tt = createTTEx(caster.pos, vec2(0,0), "0", 12, 10, colorA(90,200,80,200))
+		startTimedLoop()
+		
+	override function onTimedLoop()
+		currentAmount += incAmount
+		tt.setText(currentAmount.toString(), 15 * 0.0023)
+		
 
 public class BarrierBuff extends NormalShieldBuff
 
@@ -20,7 +44,17 @@ public class BarrierBuff extends NormalShieldBuff
 		if not done
 			new TextTagEntity(victim.pos, vec2(GetRandomReal(-0.2, 0.2), GetRandomReal(10, 15)),blockAmount.toInt().toString() , 10, 2., colorA(74, 174, 67, 140+blockAmount.toInt() div 3))
 
-		
+
+	static function onCast(UnitEntity caster, int lvl)
+		cdata = new ChannelData(lvl*1.5, caster)
+
+	
+	static function onEndCast(int abilId, UnitEntity caster, int lvl )
+		cdata.stopTimedLoop()
+		new BarrierBuff(cdata.caster, 20., cdata.currentAmount)
+
+
+
 @compiletime function createAbilities()
 	// Barrier Buff Herospell
 	let hdef = new ChannelSpellPreset("HAnb",4)

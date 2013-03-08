@@ -1,14 +1,49 @@
 package Hero
-import Entity
-import EventHandling
+import OnCast
 
-public abstract class Hero extends UnitEntity
+public module Hero
 	
-	construct(vec3 pos, real radius, unit hero )
-		super(pos, radius, hero)
-		print(actor.getName())
+	abstract static function onCast(int abilId, thistype caster, int lvl)
+	
+	abstract static function onPointCast(int abildId, thistype caster, int lvl, vec2 tpos)
+	
+	abstract static function onUnitCast(int abildId, thistype caster, int lvl, unit target)
+	
+	abstract static function onEndCast(int abilId, thistype caster, int lvl )
+	
+	static function evalCast() returns boolean
+		let u = GetTriggerUnit()
+		let id = GetSpellAbilityId()
+		let tx = GetSpellTargetX()
+		let ty = GetSpellTargetY()
+		let tu = GetSpellTargetUnit()
+		if tx == 0 and tu == null
+			onCast(id, u.getUserData() castTo thistype, GetUnitAbilityLevel(u, id) )
+		else if tu == null
+			onPointCast(id, u.getUserData() castTo thistype, GetUnitAbilityLevel(u, id), vec2(tx,ty))
+		else
+			onUnitCast(id, u.getUserData() castTo thistype, GetUnitAbilityLevel(u, id), tu)
+		return false
 		
-	override function update()
-		super.update()
-		pos.x = actor.getX()
-		pos.y = actor.getY()
+	static function evalPointCast() returns boolean
+		let u = GetTriggerUnit()
+		let id = GetSpellAbilityId()
+		onCast(id, u.getUserData() castTo thistype, GetUnitAbilityLevel(u, id) )
+		return false
+		
+		
+	static function evalEndcast() returns boolean
+		let u = GetTriggerUnit()
+		let id = GetSpellAbilityId()
+		onEndCast(id, u.getUserData() castTo thistype, GetUnitAbilityLevel(u, id) )
+		return false
+	
+	static function registerEvents(unit u)
+		var t = CreateTrigger()
+		t.registerUnitEvent(u, EVENT_UNIT_SPELL_EFFECT)
+		t.addCondition(Condition(function Hero.evalCast) )
+		t = CreateTrigger()
+		t.registerUnitEvent(u, EVENT_UNIT_SPELL_ENDCAST)
+		t.addCondition(Condition(function Hero.evalEndcast) )
+		
+	

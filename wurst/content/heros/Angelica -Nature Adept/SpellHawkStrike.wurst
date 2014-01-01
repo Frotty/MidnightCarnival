@@ -16,7 +16,7 @@ public class Hawk extends UnitEntity
 	
 	construct( UnitEntity caster, vec3 startPos, vec3 targetPos, angle facing, real dist )
 		super( startPos, createUnit(caster.owner, HAWK_DUMMY_ID, startPos.toVec2(), facing ))
-		actor.addAbility(LOCUST_ID).setVertexColor(255,255,255,colZ)
+		actor..addAbility(LOCUST_ID)..setVertexColor(255,255,255,colZ)
 		
 		dummyMissile = new BezierMissile(startPos, 0, caster.owner, facing, "")
 		dummyMissile.setControlPoints( startPos.offset2d(facing, -dist/3 ).addReals(0,0,200.)

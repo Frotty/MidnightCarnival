@@ -20,7 +20,6 @@ public class HeroNAdept extends UnitEntity
 		super(pos, RADIUS, CreateUnit(owner, ID, pos.x, pos.y, 0.))
 		registerEvents(actor)
 		debugPrint("created", 2)
-		asdfdafsd
 
 	/**
 		What is this I don't even

@@ -14,9 +14,9 @@ public abstract class Entity
 	use LinkedListModule
 	
 	/** 3d vector position */
-	protected vec3 pos
+	vec3 pos
 	/** 3d vector velocity */
-	protected vec3 vel
+	vec3 vel
 	
 	/** radius */
 	real radius = 0.
@@ -108,21 +108,21 @@ public abstract class Entity
 	
 abstract public class UnitEntity extends Entity
 	static trigger dmgTrig = CreateTrigger()
-	protected unit actor
+	unit actor
 	
 	LinkedList<Buff> currentBuffs = new LinkedList<Buff>()
 	
 	construct( vec3 pos, unit actor )
 		super(pos, actor.getOwner())
 		this.actor = actor
-		actor.setUserData(this castTo int).addAbility(HEIGHT_ENABLER).removeAbility(HEIGHT_ENABLER)
+		actor..setUserData(this castTo int)..addAbility(HEIGHT_ENABLER)..removeAbility(HEIGHT_ENABLER)
 		dmgTrig.registerUnitEvent(actor, EVENT_UNIT_DAMAGED)
 		unitEntityCount++
 		
 	construct( vec3 pos, real radius, unit actor )
 		super(pos, radius, actor.getOwner())
 		this.actor = actor
-		actor.setUserData(this castTo int).addAbility(HEIGHT_ENABLER).removeAbility(HEIGHT_ENABLER)
+		actor..setUserData(this castTo int)..addAbility(HEIGHT_ENABLER)..removeAbility(HEIGHT_ENABLER)
 		dmgTrig.registerUnitEvent(actor, EVENT_UNIT_DAMAGED)
 		unitEntityCount++
 		
@@ -146,7 +146,7 @@ abstract public class UnitEntity extends Entity
 	static function onDamage()
 		let victimData = GetTriggerUnit().getUserData() castTo UnitEntity
 		let attackerData = GetAttacker().getUserData() castTo UnitEntity
-		debugPrint("onDamage " + victimData.currentBuffs.size.toString(), 2)
+		debugPrint("onDamage " + victimData.currentBuffs.getSize().toString(), 2)
 		for bff in victimData.currentBuffs
 			bff.defenseModifier()
 			

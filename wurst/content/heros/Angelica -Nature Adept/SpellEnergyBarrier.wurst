@@ -57,22 +57,22 @@ public class BarrierBuff extends NormalShieldBuff
 
 @compiletime function createAbilities()
 	// Barrier Buff Herospell
-	let hdef = new ChannelSpellPreset("HAnb",4)
+	let hdef = new ChannelSpellPreset('HAnb',4)
 	hdef.setDisablesOther(false)
-	hdef.setOptions(options.visible, true)
-	hdef.setName(0, "HEROSPELL | Nature Barrier Sphere" )
-	hdef.setRace(0, "nightelf")
+	hdef.setOption(Option.VISIBLE, true)
+	hdef.setName("HEROSPELL | Nature Barrier Sphere" )
+	hdef.setRace("nightelf")
 	hdef.setIcon("BTNNatureBarrier")
 	hdef.setFollowThroughTime(0.0)
 
 	// Barrier Buff (the icon)
-	let bdef = new BuffDefinition("BAnb", "Basl" )
+	let bdef = new BuffDefinition('BAnb', 'Basl' )
 	bdef.setTooltipNormal(0, "|cff31A54AEnergy Barrier")
 	bdef.setTooltipNormalExtended(0, "Blocks some damage and increases regeneration.")
 	// Barrier Buff Tornado Dummy Ability
-	let adef = new AbilityDefinition("AAnb", "Aasl")
-	adef.setName(0, "BUFFDUMMY | Barrier Buff (dummy)")
+	let adef = new AbilityDefinition('AAnb', 'Aasl')
+	adef.setName("BUFFDUMMY | Barrier Buff (dummy)")
 	adef.setTargetsAllowed(0, "self")
-	adef.setBuff(1, "BAnb")
-	adef.setTarget(0, "Spells\\Sfx\\Barrier.mdx")
+	adef.setBuffs(1, "BAnb")
+	adef.setTarget("Spells\\Sfx\\Barrier.mdx")
 	

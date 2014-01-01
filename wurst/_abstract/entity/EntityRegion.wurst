@@ -49,7 +49,7 @@ class Regions
 function updateEntityRegions()
 	var e = Entity.first
 	while e != null
-		e.currentRegion = getEntityRegion(e.pos)
+		e.currentRegion = getEntityRegion(e.getPos())
 		e = e.next
 	
 	

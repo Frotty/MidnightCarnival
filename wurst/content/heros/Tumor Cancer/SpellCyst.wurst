@@ -14,7 +14,7 @@ public class Cyst extends UnitEntity
 	
 	construct(vec3 pos, player owner)
 		super(pos, RADIUS, CreateUnit(owner, ID, pos.x, pos.y, GetRandomReal(0, 360)))
-		actor.setTimeScale(0.5).setAnimation("birth").queueAnimation("stand")
+		actor..setTimeScale(0.5)..setAnimation("birth")..queueAnimation("stand")
 		cystSpawn1.playOnPoint(pos.x, pos.y, pos.z)
 		cystSpawn2.playOnPoint(pos.x, pos.y, pos.z)
 		debugPrint("created1", 5)

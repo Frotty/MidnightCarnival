@@ -11,7 +11,7 @@ public class TextTagEntity extends Entity
 	construct(vec3 pos, vec2 vel, string text, int size, real duration,  colorA col )
 		super(pos,DUMMY_PLAYER)
 		dur = duration
-		tt = createTTEx(pos, vec2(0,0), text, size, duration, col)
+		tt = createTTEx(pos, vec2(0,0), text, size.toReal(), duration, col)
 		this.vel = vel.toVec3()
 		
 	override function update()
